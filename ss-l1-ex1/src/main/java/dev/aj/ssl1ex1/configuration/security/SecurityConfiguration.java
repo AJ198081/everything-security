@@ -7,7 +7,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfiguration {
-
     @Bean
     public SecurityFilterChain getSecurityFile(HttpSecurity httpSecurity) throws Exception {
 
@@ -16,10 +15,11 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .csrf().ignoringAntMatchers("/h2-console/**");
-
+                .httpBasic()
+                .and()
+                .csrf().ignoringAntMatchers("/h2-console/**")
+                .and()
+                .headers().frameOptions().sameOrigin();
         return httpSecurity.build();
-
     }
-
 }
